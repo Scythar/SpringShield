@@ -407,7 +407,7 @@ text
 
 ## 🎉 Project Complete!
 
-Your SpringShield project is now complete with:
+SpringShield project is now complete with:
 
 ✅ **All Required Packages:**
 - config (Security, JWT, ModelMapper, CORS)
@@ -433,3 +433,4 @@ Your SpringShield project is now complete with:
 mvn clean install
 mvn spring-boot:run
 Access at: http://localhost:8080 🚀
+

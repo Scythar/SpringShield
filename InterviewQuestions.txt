@@ -1,0 +1,76 @@
+<--------------------------------------------------------------------------------------------------------------->
+✅Explain your SpringShield project.
+
+ANSWER:
+SpringShield is a Spring Boot-based REST API security project where I implemented stateless authentication using JWT.
+
+The system supports login using username and password, which are securely stored using BCrypt hashing. After successful authentication through Spring Security’s AuthenticationManager, the system issues an access token and a refresh token.
+
+The access token is short-lived and used to secure protected endpoints. I implemented a custom JWT filter that intercepts each request, validates the token, and sets the authentication in the SecurityContext.
+
+Additionally, I enabled method-level security using @PreAuthorize to enforce role-based access control at the service layer, ensuring fine-grained authorization.
+
+I also implemented a database-backed refresh token mechanism to allow secure token renewal without requiring users to log in again.
+
+
+
+<--------------------------------------------------------------------------------------------------------------->
+✅Explain authentication flow in your project.
+
+ANSWER:
+At login, AuthenticationManager validates credentials using CustomUserDetailsService and BCrypt. Upon success, JWT access and refresh tokens are issued. For protected endpoints, the JwtAuthenticationFilter intercepts requests, validates the access token, and sets the authentication in the SecurityContext. Spring Security then performs authorization checks before allowing access to secured methods.
+
+
+
+
+<--------------------------------------------------------------------------------------------------------------->
+✅What is the difference between URL-based security and method-level security in Spring Security, and why did you choose method-level security?
+
+ANSWER:
+URL-based security enforces authorization rules at the HTTP endpoint level using request matchers in SecurityConfig. It protects routes but does not secure the underlying business logic directly.
+
+Method-level security, enabled using @EnableMethodSecurity and annotations like @PreAuthorize, enforces authorization at the service layer. This ensures that even if a method is invoked internally or reused elsewhere, authorization checks are still applied.
+
+I chose method-level security to achieve fine-grained control and ensure that business logic is protected independently of the web layer.
+
+
+
+
+<--------------------------------------------------------------------------------------------------------------->
+✅Why is it important to make the application stateless when using JWT, and what would happen if you used session-based authentication together with JWT?
+
+ANSWER:
+JWT-based authentication is designed to be stateless because all user identity and authorization data are embedded within the token itself. This eliminates the need for server-side session storage. If session-based authentication were used alongside JWT, it would defeat the purpose of token-based stateless authentication by reintroducing server-side state, reducing scalability, and increasing complexity.
+
+
+
+
+<--------------------------------------------------------------------------------------------------------------->
+✅Why is BCrypt preferred over storing hashed passwords using SHA-256 or MD5?
+
+ANSWER:
+SHA-256 and MD5 are designed for fast hashing and are vulnerable to brute-force and rainbow table attacks when used for password storage. BCrypt is specifically designed for password hashing. It includes built-in salting and an adjustable work factor, making it computationally expensive to crack passwords through brute force attacks.
+
+
+
+
+<--------------------------------------------------------------------------------------------------------------->
+✅Why is it recommended to store refresh tokens in the database but not store access tokens in the database?
+
+ANSWER:
+Access tokens are short-lived and self-contained JWTs designed for stateless authentication, so storing them in the database would defeat their performance and scalability benefits. Refresh tokens, however, are long-lived and effectively act as re-authentication credentials, so they must be stored in the database to allow revocation, logout support, and protection against token misuse.
+
+
+
+
+<--------------------------------------------------------------------------------------------------------------->
+✅What did you improve compared to a basic Spring Security setup?
+
+ANSWER:
+Initially, the system relied on default Spring Security configuration using HTTP Basic authentication and session-based state management.
+
+I migrated it to stateless JWT-based authentication to remove server-side session storage and improve scalability.
+
+I also introduced role-based authorization at the method level, ensuring business logic is protected independently of HTTP routes.
+
+Additionally, I implemented refresh tokens stored in the database to support secure token renewal and logout functionality.
