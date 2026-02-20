@@ -135,7 +135,7 @@ Access tokens are short-lived and self-contained JWTs designed for stateless aut
 ANSWER:
 Initially, the system relied on default Spring Security configuration using HTTP Basic authentication and session-based state management.
 
-I migrated it to stateless JWT-based authentication to remove server-side session storage and improve scalability.
+I migrated it to stateless JWT-based authentication to remove server-side session storage and improve scalability. Stateful authentication system are not easily scalable.
 
 I also introduced role-based authorization at the method level, ensuring business logic is protected independently of HTTP routes.
 
